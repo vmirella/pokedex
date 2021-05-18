@@ -4,7 +4,40 @@
   align-items: center;
   justify-content: center;
 
+  .container-welcome__title {
+    font-weight: bold;
+    font-size: 26px;
+    margin: 0;
+  }
+
+  .container-welcome__image {
+    margin-bottom: 25px;
+    width: 100%;
+    max-width: 325px;
+    text-align: center;
+    background: url('../assets/img/pikachu.png');
+
+    animation-name: animation;
+    animation-duration: 1.5s;
+    animation-direction: alternate;
+    animation-timing-function: steps(15);
+    animation-iteration-count: infinite;
+
+    img {
+      width: 100%;
+      max-width: 325px;
+      height: auto;
+    }
+  }
+
   .container-welcome__description {
     max-width: 570px;
+    margin: 30px 30px 50px;
+    font-size: 18px;
   }
+}
+
+@keyframes animation {
+  from { background-position: 0px; }
+  to { background-position: -4875px; }
 }
