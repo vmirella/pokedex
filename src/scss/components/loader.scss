@@ -1,0 +1,57 @@
+.container-loader {
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+  background-color: $color-background;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  .container-loader__container-pokeball {
+    position: relative;
+    overflow: hidden;
+    width: 106px;
+    height: 106px;
+
+    animation: fall .25s ease-in-out, shake 1.25s cubic-bezier(.36,.07,.19,.97) infinite;
+
+    .container-loader__pokeball {
+      background: url('../assets/img/pokeball.png');
+      background-position: 106px;
+
+      width: 106px;
+      height: 106px;
+
+      position: absolute;
+      top: calc(50% - 53px);
+      left: calc(50% - 53px);
+      animation-name: pokeball-blink;
+      animation-duration: 0.5s;
+      animation-direction: alternate;
+      animation-timing-function: steps(2);
+      animation-iteration-count: infinite;
+    }
+  }
+}
+
+@keyframes pokeball-blink {
+  from { background-position: 0px; }
+  to { background-position: -212px; }
+}
+
+@keyframes shake {
+  0% { transform: translate(0, 0) rotate(0); }
+  20% { transform: translate(-10px, 0) rotate(-20deg); }
+  30% { transform: translate(10px, 0) rotate(20deg); }
+  50% { transform: translate(-10px, 0) rotate(-10deg); }
+  60% { transform: translate(10px, 0) rotate(10deg); }
+  100% { transform: translate(0, 0) rotate(0); }
+}
+@keyframes fall {
+  0% { top: -200px }
+  60% { top: 0 }
+  80% { top: -20px }
+  100% { top: 0 }
+}

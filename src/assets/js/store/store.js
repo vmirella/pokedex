@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    pokemons: []
+    pokemons: [],
+    showLoader: false
   },
   mutations: {
     updateStatePokemon (state, name) {

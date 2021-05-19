@@ -96,6 +96,12 @@
             }
           });
           this.$store.state.pokemons = this.pokemons;
+
+          setTimeout(() => {
+            this.$store.state.showLoader = false;
+            const body = document.body;
+            body.classList.remove('no-scroll');
+          }, 3000);
         });
       },
       async fetchData (url) {

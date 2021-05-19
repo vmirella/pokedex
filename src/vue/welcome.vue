@@ -9,7 +9,7 @@
             </div>
             <h3 class="container-welcome__title">Welcome to Pokédex</h3>
             <p class="container-welcome__description">The digital encyclopedia created by Professor Oak is an invaluable tool to Trainers in the Pokémon world.</p>
-            <router-link class="btn-action" :to="{name: 'list'}">Get started</router-link>
+            <button class="btn-action" @click="showLoader">Get started</button>
           </div>
         </div>
       </div>
@@ -19,7 +19,13 @@
 
 <script>
   export default {
-    mounted() {
+    methods: {
+      showLoader() {
+        this.$store.state.showLoader = true;
+        this.$router.push({ name: 'list'});
+        const body = document.body;
+        body.classList.add('no-scroll');
+      }
     }
   }
 </script>

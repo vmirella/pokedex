@@ -2,11 +2,16 @@
 @import "~dgsnackbar/dist/dgsnackbar.css";
 @import "views/empty";
 @import "components/dialog";
+@import "components/loader";
 @import "views/welcome";
 @import "views/list";
 
 body {
   font-family: 'Lato';
+}
+
+body.no-scroll {
+  overflow: hidden;
 }
 
 .container-vertical-center {
