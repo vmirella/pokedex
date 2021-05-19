@@ -1,5 +1,36 @@
 <template>
   <div  class="container-top-center">
+    <div class="container-dialog" v-if="showDialog" @click="showDialog = false">
+      <div class="dialog" v-on:click.stop>
+        <div class="dialog__container-image">
+          <img class="dialog__image" alt="Pikachu" :src="details.image">
+          <i class="fa fa-times-circle dialog__close" @click="showDialog = false"></i>
+        </div>
+        <div class="dialog__body">
+          <ul class="dialog__list">
+            <li class="dialog__item-list">
+              <h5>Name: {{details.name}}</h5>
+            </li>
+            <li class="dialog__item-list">
+              <h5>Weight: {{details.weight}}</h5>
+            </li>
+            <li class="dialog__item-list">
+              <h5>Height: {{details.height}}</h5>
+            </li>
+            <li class="dialog__item-list">
+              <h5>Types: {{details.types}}</h5>
+            </li>
+          </ul>
+          <div class="dialog__actions">
+            <button class="btn-action">Share to my friends</button>
+            <div class="star" :class="{'star-active': details.isFavorite}" @click="updateStatePokemon(details.name)">
+              <i class="fa fa-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-12 text-center">
@@ -16,9 +47,9 @@
               </div>
 
               <ul class="container-list__list-group" v-else>
-                <li class="container-list__list-group-item" v-for="(pokemon, index) in pokemons" :key="index">
+                <li class="container-list__list-group-item" v-for="(pokemon, index) in pokemons" :key="index" @click="showDetail(pokemon)">
                   <h4 class="m-0">{{pokemon.name}}</h4>
-                  <div class="star" :class="{'star-active': pokemon.isFavorite}" @click="updateStatePokemon(pokemon.name)">
+                  <div class="star" :class="{'star-active': pokemon.isFavorite}" @click="updateStatePokemon(pokemon.name)" v-on:click.stop>
                     <i class="fa fa-star"></i>
                   </div>
                 </li>
@@ -53,7 +84,7 @@
       init() {
         const api = 'https://pokeapi.co/api/v2/pokemon/';
 
-        this.fetchAsync(api).then((response) => {
+        this.fetchData(api).then((response) => {
           const data = response.results;
           this.pokemons = data.map((pokemon) => {
             return {
@@ -65,7 +96,7 @@
           this.$store.state.pokemons = this.pokemons;
         });
       },
-      async fetchAsync (url) {
+      async fetchData (url) {
         let response = await fetch(url);
         let data = await response.json();
         return data;
@@ -73,11 +104,37 @@
       updateStatePokemon(name) {
         this.$store.commit('updateStatePokemon', name);
         this.pokemons = this.$store.state.pokemons;
+        this.details.isFavorite = !this.details.isFavorite;
+      },
+      showDetail(details) {
+        const api = `https://pokeapi.co/api/v2/pokemon/${details.name}`;
+
+        this.fetchData(api).then((response) => {
+          let types = response.types;
+          let typesText = '';
+          for (let i = 0; i < types.length; i++) {
+            typesText += types[i].type.name + ',';
+          }
+          typesText = typesText.slice(0, -1);
+
+          this.details = {
+            name: details.name,
+            weight: response.weight,
+            height: response.height,
+            types: typesText,
+            image: response.sprites.front_default,
+            isFavorite: details.isFavorite
+          }
+
+          this.showDialog = true;
+        });
       }
     },
     data() {
       return {
-        pokemons: []
+        pokemons: [],
+        showDialog: false,
+        details: {}
       }
     }
   }

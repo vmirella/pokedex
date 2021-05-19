@@ -1,0 +1,100 @@
+.container-dialog {
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+  background-color:rgba(0, 0, 0, 0.6);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition-duration: 0.5s;
+
+  .dialog {
+    max-width: 315px;
+    border-radius: 5px;
+    background-color: $color-white;
+    width: 100%;
+
+    .dialog__container-image {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-image: url("../assets/img/background.png");
+      background-position: 0px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+
+      animation-name: animation;
+      animation-duration: 58s;
+      animation-iteration-count: infinite;
+
+      .dialog__close {
+        position: absolute;
+        font-size: 26px;
+        color: white;
+        top: 15px;
+        right: 15px;
+        cursor: pointer;
+      }
+
+      .dialog__image {
+        width: auto;
+        height: 100%;
+      }
+    }
+
+    .dialog__body {
+      padding: 20px 30px;
+
+      .dialog__list {
+        list-style-type: none;
+        padding: 0px;
+
+        .dialog__item-list {
+          padding-bottom: 10px;
+          margin-bottom: 10px;
+          border-bottom: 1px solid $color-gray-500;
+          h5 {
+            font-size: 18px;
+            color: $color-gray-300;
+          }
+        }
+
+        .dialog__item-list:last-child {
+          margin-bottom: 20px;
+        }
+
+      }
+
+      .dialog__actions {
+        display: flex;
+        justify-content: space-between;
+
+        .btn-action {
+          margin-right: 16px;
+          padding: 11px 10px;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    .dialog {
+      max-width: 570px;
+
+      .dialog__actions .btn-action {
+        padding: 11px 22px !important;
+        font-size: 18px !important;
+      }
+    }
+  }
+}
+
+@keyframes animation {
+  from { background-position: 0px; }
+  to { background-position: -688px; }
+}
