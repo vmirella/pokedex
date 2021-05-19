@@ -22,7 +22,7 @@
             </li>
           </ul>
           <div class="dialog__actions">
-            <button class="btn-action">Share to my friends</button>
+            <button class="btn-action" @click="shareDataPokemon">Share to my friends</button>
             <div class="star" :class="{'star-active': details.isFavorite}" @click="updateStatePokemon(details.name)">
               <i class="fa fa-star"></i>
             </div>
@@ -76,6 +76,8 @@
 </template>
 
 <script>
+  import dgsnackbar from 'dgsnackbar';
+
   export default {
     mounted() {
       this.init();
@@ -128,7 +130,34 @@
 
           this.showDialog = true;
         });
-      }
+      },
+      shareDataPokemon() {
+        const text = this.getDetailPokemonText();
+        this.copyToClipboard(text);
+        dgsnackbar({
+          message: 'Copied to clipboard successfully',
+          type: 'success'
+        })
+      },
+      getDetailPokemonText() {
+        let text = '';
+        text += `🚨 DETAIL POKEMÓN 🚨 \n`;
+
+        text += `✔️ Name: ${this.details.name} \n`;
+        text += `✔️ Weight: ${this.details.weight} \n`;
+        text += `✔️ Height: ${this.details.height} \n`;
+        text += `✔️ Types: ${this.details.types} \n`;
+        text += `✔️ Image: ${this.details.image} \n`;
+        return text;
+      },
+      copyToClipboard(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      },
     },
     data() {
       return {

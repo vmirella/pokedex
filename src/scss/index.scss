@@ -1,8 +1,9 @@
 @import "values/colors";
+@import "~dgsnackbar/dist/dgsnackbar.css";
+@import "views/empty";
+@import "components/dialog";
 @import "views/welcome";
 @import "views/list";
-@import "components/dialog";
-@import "views/empty";
 
 body {
   font-family: 'Lato';
