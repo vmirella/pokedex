@@ -38,7 +38,7 @@
             <div class="container-list__content">
               <div class="search">
                 <i class="fa fa-search search__icon-search"></i>
-                <input class="search__input-search" placeholder="Search"/>
+                <input class="search__input-search" placeholder="Search" v-model="searchValue" @keyup="search" @keydown.enter="search"/>
               </div>
               <div class="container-empty" v-if="pokemons.length < 1">
                 <h2 class="container-empty__title">Uh-oh!</h2>
@@ -111,6 +111,10 @@
         if (this.isShowFavorites) {
           this.showFavorites();
         }
+
+        if (this.isSearch) {
+          this.search();
+        }
       },
       showDetail(details) {
         const api = `https://pokeapi.co/api/v2/pokemon/${details.name}`;
@@ -165,12 +169,31 @@
       showAll() {
         this.pokemons = this.$store.state.pokemons;
         this.isShowFavorites = false;
+        this.isSearch = false;
+        this.searchValue = '';
       },
       showFavorites() {
         this.pokemons = this.pokemons.filter((element) => {
           return element.isFavorite === true;
         });
         this.isShowFavorites = true;
+      },
+      search() {
+        this.pokemons = this.$store.state.pokemons;
+        this.isShowFavorites = false;
+
+        if (this.searchValue !== '') {
+          this.pokemons = this.pokemons.filter((element) => {
+            return element.name
+              .toLowerCase()
+              .includes(this.searchValue.toLowerCase());
+          });
+
+          this.isSearch = true;
+        } else {
+          this.showAll();
+        }
+
       }
     },
     data() {
@@ -178,7 +201,9 @@
         pokemons: [],
         showDialog: false,
         details: {},
-        isShowFavorites: false
+        isShowFavorites: false,
+        searchValue: '',
+        isSearch: false
       }
     }
   }
