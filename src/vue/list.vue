@@ -16,15 +16,9 @@
               </div>
 
               <ul class="container-list__list-group" v-else>
-                <li class="container-list__list-group-item">
-                  <h4 class="m-0">Bulbasaur</h4>
-                  <div class="star">
-                    <i class="fa fa-star"></i>
-                  </div>
-                </li>
-                <li class="container-list__list-group-item">
-                  <h4 class="m-0">Charmander</h4>
-                  <div class="star star-active">
+                <li class="container-list__list-group-item" v-for="(pokemon, index) in pokemons" :key="index">
+                  <h4 class="m-0">{{pokemon.name}}</h4>
+                  <div class="star" :class="{'star-active': pokemon.isFavorite}" @click="updateStatePokemon(pokemon.name)">
                     <i class="fa fa-star"></i>
                   </div>
                 </li>
@@ -52,16 +46,38 @@
 
 <script>
   export default {
+    mounted() {
+      this.init();
+    },
+    methods: {
+      init() {
+        const api = 'https://pokeapi.co/api/v2/pokemon/';
+
+        this.fetchAsync(api).then((response) => {
+          const data = response.results;
+          this.pokemons = data.map((pokemon) => {
+            return {
+              name: pokemon.name,
+              url: pokemon.url,
+              isFavorite: false
+            }
+          });
+          this.$store.state.pokemons = this.pokemons;
+        });
+      },
+      async fetchAsync (url) {
+        let response = await fetch(url);
+        let data = await response.json();
+        return data;
+      },
+      updateStatePokemon(name) {
+        this.$store.commit('updateStatePokemon', name);
+        this.pokemons = this.$store.state.pokemons;
+      }
+    },
     data() {
       return {
-        pokemons: [
-          {
-            name: 'Squirtle',
-            weigth: 20,
-            height: 18,
-            types: ['Normal', 'Water']
-          }
-        ]
+        pokemons: []
       }
     }
   }
