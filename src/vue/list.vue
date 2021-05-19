@@ -62,11 +62,11 @@
 
     <div class="container-list__actions fixed-bottom">
       <div class="container-list__actions-justify">
-        <button class="btn-action">
+        <button class="btn-action" :class="{'btn-disabled': isShowFavorites}" @click="showAll">
           <i class="fa fa-list btn-action__icon"></i>
           All
         </button>
-        <button class="btn-action btn-disabled">
+        <button class="btn-action" :class="{'btn-disabled': !isShowFavorites}" @click="showFavorites">
           <i class="fa fa-star btn-action__icon"></i>
           Favorites
         </button>
@@ -107,6 +107,10 @@
         this.$store.commit('updateStatePokemon', name);
         this.pokemons = this.$store.state.pokemons;
         this.details.isFavorite = !this.details.isFavorite;
+
+        if (this.isShowFavorites) {
+          this.showFavorites();
+        }
       },
       showDetail(details) {
         const api = `https://pokeapi.co/api/v2/pokemon/${details.name}`;
@@ -158,12 +162,23 @@
         document.execCommand('copy');
         document.body.removeChild(textarea);
       },
+      showAll() {
+        this.pokemons = this.$store.state.pokemons;
+        this.isShowFavorites = false;
+      },
+      showFavorites() {
+        this.pokemons = this.pokemons.filter((element) => {
+          return element.isFavorite === true;
+        });
+        this.isShowFavorites = true;
+      }
     },
     data() {
       return {
         pokemons: [],
         showDialog: false,
-        details: {}
+        details: {},
+        isShowFavorites: false
       }
     }
   }
