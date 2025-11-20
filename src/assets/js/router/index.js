@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Welcome from '../../../vue/welcome';
-import List from '../../../vue/list';
+import Welcome from '@/vue/welcome';
+import List from '@/vue/list';
 
 Vue.use(VueRouter);
 
