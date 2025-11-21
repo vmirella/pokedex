@@ -7,7 +7,7 @@ import List from '@/vue/list';
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  mode: "history",
+  mode: "hash",
   routes: [
     {
       path: '/',
