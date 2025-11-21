@@ -3,12 +3,7 @@ La enciclopedia digital creada por el profesor Oak es una herramienta invaluable
 
 ### Demo
 
-`<link>` : <https://pokedex.co.pe/>
-
-### Desarrollo
-Comencé el proyecto haciendo un pequeño esquema para ver la interacción de las vistas. Después comencé en función a ello a deducir las tareas para visualizarlas mejor las registré en un tablero Kanban.
-
-[![](https://pokedex.co.pe/esquema.jpg)
+`<link>` : <https://vmirella.github.io/pokedex/#/>
 
 #### Tablero
 
